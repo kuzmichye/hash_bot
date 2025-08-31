@@ -2,12 +2,18 @@ import re
 import hashlib
 import asyncio
 import logging
+import os
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
+from dotenv import load_dotenv
 
-# === Константы ===
-PHONE_SALT = "tg_verification_salt_2024"
+# Загружаем переменные окружения
+load_dotenv()
+
+# === Константы из .env ===
+PHONE_SALT = os.getenv("PHONE_SALT", "default_salt")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 def normalize_phone(phone: str) -> str:
     if not phone:
@@ -25,8 +31,6 @@ def hash_phone(phone: str) -> str:
 
 # === aiogram 3 ===
 logging.basicConfig(level=logging.INFO)
-
-BOT_TOKEN = "8438065991:AAHw9t6nRKOhSMa7afxw7V3vdMbl7hLSh20"  # вставь свой токен
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
